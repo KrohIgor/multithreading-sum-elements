@@ -8,7 +8,7 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 
 public class CalculateSumHandler {
-    private static final int NUMBER_THREADS = 10;
+    private static final int THREADS_NUMBER = 10;
 
     public static List<Integer> getListOfNumbers(int value, int number) {
         List<Integer> list = new ArrayList<>();
@@ -20,10 +20,10 @@ public class CalculateSumHandler {
 
     public static long getSumExecutorService(List<Integer> list) {
         List<Callable<Integer>> callableList = new ArrayList<>();
-        for (int i = 0; i < NUMBER_THREADS; i++) {
-            callableList.add(new CalculateSumExecutorService(list, NUMBER_THREADS, i));
+        for (int i = 0; i < THREADS_NUMBER; i++) {
+            callableList.add(new CalculateSumExecutorService(list, THREADS_NUMBER, i));
         }
-        ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_THREADS);
+        ExecutorService executorService = Executors.newFixedThreadPool(THREADS_NUMBER);
         long sum = 0;
         try {
             List<Future<Integer>> futures = executorService.invokeAll(callableList);
@@ -39,6 +39,6 @@ public class CalculateSumHandler {
 
     public static long getSumForkJoin(List<Integer> list) {
         ForkJoinPool pool = ForkJoinPool.commonPool();
-        return pool.invoke(new CalculateSumForkJoin(list, NUMBER_THREADS));
+        return pool.invoke(new CalculateSumForkJoin(list, THREADS_NUMBER));
     }
 }
