@@ -22,9 +22,9 @@ public class CalculateSumForkJoin extends RecursiveTask<Long> {
                     .stream()
                     .mapToLong(ForkJoinTask::join)
                     .sum();
-        } else {
-            return calculate(list);
         }
+        return calculate(list);
+
     }
 
     private List<CalculateSumForkJoin> createSubTasks() {
@@ -36,6 +36,6 @@ public class CalculateSumForkJoin extends RecursiveTask<Long> {
     }
 
     private long calculate(List<Integer> list) {
-        return list.stream().mapToLong(v -> v).sum();
+        return list.stream().reduce(0, Integer::sum);
     }
 }

@@ -17,6 +17,6 @@ public class CalculateSumExecutorService implements Callable<Integer> {
         int start = delimiter * size;
         int end = start + size;
         List<Integer> subList = list.subList(start, end);
-        return subList.stream().mapToInt(v -> v).sum();
+        return subList.stream().reduce(0, Integer::sum);
     }
 }
